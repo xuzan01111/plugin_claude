@@ -2,7 +2,7 @@
 name: xz-plan
 description: 创建新版本计划。/xz-plan N 需求描述
 disable-model-invocation: false
-argument-hint: "[N] [需求描述2]"
+argument-hint: "[N] [需求描述]"
 ---
 
 # XZ Plan - 创建新版本计划

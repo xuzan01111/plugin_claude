@@ -18,9 +18,11 @@ argument-hint: "[N]"
 
 ## 辅助脚本
 
-插件 `bin/` 目录下的 `xz-tools.py`（插件启用时自动加入 PATH）
+**脚本路径**：取本 skill 的 Base directory（prompt 开头 "Base directory for this skill:" 的值），向上两级目录，拼接 `bin/xz-tools.py`。
 
-后续所有脚本调用直接使用 `xz-tools.py`。脚本在**当前工作目录**下操作 `.xz_planning/`。
+示例：Base directory = `.../skills/xz-exec` → 脚本 = `.../bin/xz-tools.py`
+
+后续所有调用使用 `python3 <脚本绝对路径> <命令>` 格式。脚本在**当前工作目录**下操作 `.xz_planning/`。
 
 ---
 
@@ -33,7 +35,7 @@ argument-hint: "[N]"
 ### 第二步：解析并读取计划
 
 ```bash
-xz-tools.py parse $ARGUMENTS
+python3 <脚本绝对路径> parse $ARGUMENTS
 ```
 
 - 从返回 JSON 中取 `phase.plan_file` 路径，读取 N-PLAN.md 完整内容
@@ -90,7 +92,7 @@ date "+%Y-%m-%d %H:%M:%S"
 3. 刷新 STATE.md：
 
 ```bash
-xz-tools.py update-state
+python3 <脚本绝对路径> update-state
 ```
 
 ### 第六步：循环或结束

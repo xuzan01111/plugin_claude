@@ -22,7 +22,11 @@ argument-hint: "[N] 或 [N1,N2,N3]"
 
 ## 辅助脚本
 
-插件 `bin/` 目录下的 `xz-tools.py`（插件启用时自动加入 PATH）
+**脚本路径**：取本 skill 的 Base directory（prompt 开头 "Base directory for this skill:" 的值），向上两级目录，拼接 `bin/xz-tools.py`。
+
+示例：Base directory = `.../skills/xz-ref` → 脚本 = `.../bin/xz-tools.py`
+
+后续所有调用使用 `python3 <脚本绝对路径> <命令>` 格式。脚本在**当前工作目录**下操作 `.xz_planning/`。
 
 ---
 
@@ -37,7 +41,7 @@ argument-hint: "[N] 或 [N1,N2,N3]"
 对每个版本号 N，执行：
 
 ```bash
-xz-tools.py parse N
+python3 <脚本绝对路径> parse N
 ```
 
 查找范围包括：

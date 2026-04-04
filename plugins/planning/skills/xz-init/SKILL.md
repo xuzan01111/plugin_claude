@@ -15,9 +15,11 @@ argument-hint: ""
 
 ## 辅助脚本
 
-插件 `bin/` 目录下的 `xz-tools.py`（插件启用时自动加入 PATH）
+**脚本路径**：取本 skill 的 Base directory（prompt 开头 "Base directory for this skill:" 的值），向上两级目录，拼接 `bin/xz-tools.py`。
 
-脚本在**当前工作目录**下操作 `.xz_planning/`。
+示例：Base directory = `.../skills/xz-init` → 脚本 = `.../bin/xz-tools.py`
+
+后续所有调用使用 `python3 <脚本绝对路径> <命令>` 格式。脚本在**当前工作目录**下操作 `.xz_planning/`。
 
 ---
 
@@ -33,7 +35,7 @@ argument-hint: ""
 ### 第二步：创建目录结构（仅首次）
 
 ```bash
-xz-tools.py init
+python3 <脚本绝对路径> init
 ```
 
 该脚本会创建：
@@ -43,7 +45,7 @@ xz-tools.py init
 
 ### 第三步：创建 README.md（每次覆盖）
 
-运行 `xz-tools.py get-readme` 获取 README 模板内容，覆盖写入项目的 `.xz_planning/README.md`。
+运行 `python3 <脚本绝对路径> get-readme` 获取 README 模板内容，覆盖写入项目的 `.xz_planning/README.md`。
 
 如果命令返回错误（模板文件不存在），跳过此步骤。
 

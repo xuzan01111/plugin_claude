@@ -28,9 +28,11 @@ argument-hint: "[N] [修改/新增/删除要求]"
 
 ## 辅助脚本
 
-插件 `bin/` 目录下的 `xz-tools.py`（插件启用时自动加入 PATH）
+**脚本路径**：取本 skill 的 Base directory（prompt 开头 "Base directory for this skill:" 的值），向上两级目录，拼接 `bin/xz-tools.py`。
 
-脚本在**当前工作目录**下操作 `.xz_planning/`。
+示例：Base directory = `.../skills/xz-update-plan` → 脚本 = `.../bin/xz-tools.py`
+
+后续所有调用使用 `python3 <脚本绝对路径> <命令>` 格式。脚本在**当前工作目录**下操作 `.xz_planning/`。
 
 ---
 
@@ -43,7 +45,7 @@ argument-hint: "[N] [修改/新增/删除要求]"
 ### 第二步：解析当前计划
 
 ```bash
-xz-tools.py parse $0
+python3 <脚本绝对路径> parse $0
 ```
 
 - 如果返回 `"ok": false` → 版本不存在，提示用户先运行 `/xz-plan N 需求描述` 创建计划
@@ -210,7 +212,7 @@ date "+%Y-%m-%d %H:%M:%S"
 2. **刷新 STATE.md**：
 
 ```bash
-xz-tools.py update-state
+python3 <脚本绝对路径> update-state
 ```
 
 ### 第十步：输出改动结果

@@ -32,7 +32,7 @@
 
 脚本位于 `$SKILL_DIR/scripts/`（即 SKILL.md 同级的 `scripts/` 目录）。
 
-`$SKILL_DIR` 由 SKILL.md 执行流程确定：运行 `xz-tools.py skill-dir xz-discuss` 获取路径。
+`$SKILL_DIR` 即本 skill 的 Base directory（由 prompt 开头 "Base directory for this skill:" 提供）。
 
 ```bash
 bash $SKILL_DIR/scripts/start-server.sh --project-dir "$(pwd)"

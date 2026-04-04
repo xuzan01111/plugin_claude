@@ -30,9 +30,11 @@ argument-hint: "[N] [需求描述]"
 
 ## 辅助脚本
 
-插件 `bin/` 目录下的 `xz-tools.py`（插件启用时自动加入 PATH）
+**脚本路径**：取本 skill 的 Base directory（prompt 开头 "Base directory for this skill:" 的值），向上两级目录，拼接 `bin/xz-tools.py`。
 
-后续所有脚本调用直接使用 `xz-tools.py`。脚本在**当前工作目录**下操作 `.xz_planning/`。
+示例：Base directory = `.../skills/xz-plan` → 脚本 = `.../bin/xz-tools.py`
+
+后续所有调用使用 `python3 <脚本绝对路径> <命令>` 格式。脚本在**当前工作目录**下操作 `.xz_planning/`。
 
 ---
 
@@ -51,7 +53,7 @@ argument-hint: "[N] [需求描述]"
 ### 第二步：检查版本是否已存在
 
 ```bash
-xz-tools.py parse N
+python3 <脚本绝对路径> parse N
 ```
 
 （将 N 替换为用户传入的实际版本号）
@@ -306,7 +308,7 @@ date "+%Y-%m-%d %H:%M:%S"
 然后运行脚本更新 STATE.md：
 
 ```bash
-xz-tools.py update-state
+python3 <脚本绝对路径> update-state
 ```
 
 ### 7. 输出结果

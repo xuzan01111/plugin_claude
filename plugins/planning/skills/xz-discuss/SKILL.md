@@ -30,16 +30,12 @@ argument-hint: "[N] [讨论内容]"
 ## 路径说明
 
 **辅助脚本：**
-插件 `bin/` 目录下的 `xz-tools.py`（插件启用时自动加入 PATH）
-脚本在**当前工作目录**下操作 `.xz_planning/`。
+**脚本路径**：取本 skill 的 Base directory（prompt 开头 "Base directory for this skill:" 的值），向上两级目录，拼接 `bin/xz-tools.py`。
+示例：Base directory = `.../skills/xz-discuss` → 脚本 = `.../bin/xz-tools.py`
+后续所有调用使用 `python3 <脚本绝对路径> <命令>` 格式。脚本在**当前工作目录**下操作 `.xz_planning/`。
 
-**确定本 skill 所在目录：**
-
-```bash
-SKILL_DIR=$(xz-tools.py skill-dir xz-discuss | python3 -c "import sys,json;print(json.load(sys.stdin)['skill_dir'])")
-```
-
-将输出结果记为 `SKILL_DIR`，后续所有相对路径基于此目录。
+**本 skill 目录（`$SKILL_DIR`）：**
+即本 skill 的 Base directory（prompt 开头 "Base directory for this skill:" 的值），后续所有相对路径基于此目录。
 
 **skill 目录结构：**
 
@@ -114,7 +110,7 @@ digraph xz_discuss {
 检查 `.xz_planning/` 是否存在，不存在则停止提示 `/xz-init`。
 
 ```bash
-xz-tools.py parse $0
+python3 <脚本绝对路径> parse $0
 ```
 
 - **N-DISCUSS.md 已存在** → 提示已有讨论文档，询问覆盖还是追加
@@ -185,7 +181,7 @@ xz-tools.py parse $0
 bash $SKILL_DIR/scripts/start-server.sh --project-dir "$(pwd)"
 ```
 
-其中 `$SKILL_DIR` 已在路径说明部分通过 `xz-tools.py skill-dir xz-discuss` 获取。
+其中 `$SKILL_DIR` 即 Base directory，已在路径说明部分确定。
 
 服务启动后输出 JSON：
 ```json
@@ -436,7 +432,7 @@ date "+%Y-%m-%d %H:%M:%S"
 3. **刷新 STATE.md**：
 
 ```bash
-xz-tools.py update-state
+python3 <脚本绝对路径> update-state
 ```
 
 ### 第十一步：输出结果

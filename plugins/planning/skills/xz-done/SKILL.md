@@ -18,9 +18,11 @@ argument-hint: "[N]"
 
 ## 辅助脚本
 
-插件 `bin/` 目录下的 `xz-tools.py`（插件启用时自动加入 PATH）
+**脚本路径**：取本 skill 的 Base directory（prompt 开头 "Base directory for this skill:" 的值），向上两级目录，拼接 `bin/xz-tools.py`。
 
-脚本在**当前工作目录**下操作 `.xz_planning/`。
+示例：Base directory = `.../skills/xz-done` → 脚本 = `.../bin/xz-tools.py`
+
+后续所有调用使用 `python3 <脚本绝对路径> <命令>` 格式。脚本在**当前工作目录**下操作 `.xz_planning/`。
 
 ---
 
@@ -29,7 +31,7 @@ argument-hint: "[N]"
 ### 第一步：检查状态
 
 ```bash
-xz-tools.py parse $ARGUMENTS
+python3 <脚本绝对路径> parse $ARGUMENTS
 ```
 
 检查版本 N 是否存在，以及 todolist 完成情况。
@@ -53,7 +55,7 @@ xz-tools.py parse $ARGUMENTS
 运行辅助脚本（纯文件移动，不涉及任何 git 操作）：
 
 ```bash
-xz-tools.py complete $ARGUMENTS
+python3 <脚本绝对路径> complete $ARGUMENTS
 ```
 
 该脚本会：

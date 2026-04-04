@@ -1,0 +1,18 @@
+{
+  "name": "xz-tools",
+  "owner": {
+    "name": "admin"
+  },
+  "metadata": {
+    "description": "XZ 系列 Claude Code 插件市场",
+    "version": "1.0.0"
+  },
+  "plugins": [
+    {
+      "name": "xz-planning",
+      "source": "./plugins/planning",
+      "description": "轻量级版本计划驱动开发 - 基于 todolist 的开发流程管理工具",
+      "version": "1.0.0"
+    }
+  ]
+}

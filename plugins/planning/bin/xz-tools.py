@@ -17,6 +17,16 @@ ARCHIVE_DIR = PLANNING_DIR / "archive"
 STATE_FILE = PLANNING_DIR / "STATE.md"
 
 
+def _sort_by_version(path: Path):
+    """按目录名前缀数字排序：'10.xxx' 排在 '2.xxx' 之后。非数字前缀退化为 inf + 字符串。"""
+    m = re.match(r"^(\d+)\.", path.name)
+    return (int(m.group(1)) if m else float("inf"), path.name)
+
+
+def _sorted_phases(base: Path):
+    return sorted(base.iterdir(), key=_sort_by_version)
+
+
 def init():
     """初始化 .xz_planning 目录结构。"""
     PHASES_DIR.mkdir(parents=True, exist_ok=True)
@@ -121,7 +131,7 @@ def status():
 
     # 扫描活跃版本
     if PHASES_DIR.exists():
-        for d in sorted(PHASES_DIR.iterdir()):
+        for d in _sorted_phases(PHASES_DIR):
             if not d.is_dir() or d.name == "archive":
                 continue
             match = re.match(r"^(\d+)\.(.+)$", d.name)
@@ -151,7 +161,7 @@ def status():
 
     # 扫描归档
     if ARCHIVE_DIR.exists():
-        for d in sorted(ARCHIVE_DIR.iterdir()):
+        for d in _sorted_phases(ARCHIVE_DIR):
             if not d.is_dir():
                 continue
             match = re.match(r"^(\d+)\.(.+)$", d.name)
@@ -214,12 +224,12 @@ def remove_all():
     # 收集当前内容摘要
     summary = []
     if PHASES_DIR.exists():
-        for d in sorted(PHASES_DIR.iterdir()):
+        for d in _sorted_phases(PHASES_DIR):
             if not d.is_dir() or d.name == "archive":
                 continue
             summary.append(f"  phases/{d.name}")
         if ARCHIVE_DIR.exists():
-            for d in sorted(ARCHIVE_DIR.iterdir()):
+            for d in _sorted_phases(ARCHIVE_DIR):
                 if d.is_dir():
                     summary.append(f"  archive/{d.name}")
 
@@ -331,7 +341,7 @@ def _update_state():
     archived_rows = []
 
     if PHASES_DIR.exists():
-        for d in sorted(PHASES_DIR.iterdir()):
+        for d in _sorted_phases(PHASES_DIR):
             if not d.is_dir() or d.name == "archive":
                 continue
             match = re.match(r"^(\d+)\.(.+)$", d.name)
@@ -364,7 +374,7 @@ def _update_state():
             )
 
     if ARCHIVE_DIR.exists():
-        for d in sorted(ARCHIVE_DIR.iterdir()):
+        for d in _sorted_phases(ARCHIVE_DIR):
             if not d.is_dir():
                 continue
             match = re.match(r"^(\d+)\.(.+)$", d.name)
